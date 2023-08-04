@@ -6,10 +6,10 @@ local TweenService = game:GetService("TweenService")
 local LocalPlayer = Players.LocalPlayer
 local Holding = false
 
-_G.AimbotEnabled = false
-_G.TeamCheck = false -- If set to true then the script would only lock your aim at enemy team members.
-_G.AimPart = "Head" -- Where the aimbot script would lock at.
-_G.Sensitivity = 0 -- How many seconds it takes for the aimbot script to officially lock onto the target's aimpart.
+AimbotEnabled = false
+TeamCheck = false -- If set to true then the script would only lock your aim at enemy team members.
+AimPart = "Head" -- Where the aimbot script would lock at.
+Sensitivity = 0 -- How many seconds it takes for the aimbot script to officially lock onto the target's aimpart.
 
 local function GetClosestPlayer()
 	local MaximumDistance = math.huge
@@ -21,7 +21,7 @@ local function GetClosestPlayer()
 
 	for _, v in next, Players:GetPlayers() do
 		if v.Name ~= LocalPlayer.Name then
-			if _G.TeamCheck == true then
+			if TeamCheck == true then
 				if v.Team ~= LocalPlayer.Team then
 					if v.Character ~= nil then
 						if v.Character:FindFirstChild("HumanoidRootPart") ~= nil then
@@ -71,7 +71,7 @@ UserInputService.InputEnded:Connect(function(Input)
 end)
 
 RunService.RenderStepped:Connect(function()
-    if Holding == true and _G.AimbotEnabled == true then
-        TweenService:Create(Camera, TweenInfo.new(_G.Sensitivity, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = CFrame.new(Camera.CFrame.Position, GetClosestPlayer().Character[_G.AimPart].Position)}):Play()
+    if Holding == true and AimbotEnabled == true then
+        TweenService:Create(Camera, TweenInfo.new(Sensitivity, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = CFrame.new(Camera.CFrame.Position, GetClosestPlayer().Character[AimPart].Position)}):Play()
     end
 end)
